@@ -13,22 +13,26 @@
  */
 
 function solution(n) {
+  const perfPro = (an) => {
+    const threeDrainage = an % 3 === 0;
+    const answerToString = an.toString();
+    const includesThree = answerToString.includes("3");
+    if (threeDrainage) an++;
+    else if (includesThree) an++;
+    else return an;
+    return perfPro(an);
+  };
   let answer = 0;
-  // for (let i = 1; i <= n; i++) {
-  //   answer++;
-  //   const answerToString = answer.toString();
-  //   if (answer % 3 === 0) {
-  //     answer++;
-  //   }
-  //   if (answerToString.includes("3")) answer++;
-  //   console.log(i, answer);
-  // }
+  for (let i = 1; i <= n; i++) {
+    answer++;
+    answer = perfPro(answer);
+  }
   return answer;
 }
 
 /**
  * for문에서 index를 통해 한단계씩 answer을 올리는게 아니라 각 단계마다 검사 후 검사한 결과값을 다시 검사해야한다.
  */
-const param = 3;
+const param = 15;
 const result = solution(param);
 console.log("result : ", result);
