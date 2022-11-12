@@ -50,13 +50,13 @@ function solution(polynomial) {
   if (nCount > 0 && xCount > 0) {
     answer.push("+");
     answer.push(nCount + "");
-  } else if (xCount === 0 && nCount > 1) {
+  } else if (xCount === 0 && nCount >= 1) {
     answer.push(nCount + "");
   }
-  console.log(answer);
+  if (xCount === 0 && nCount === 0) return "0";
   return answer.join(" ");
 }
 
-const param = "1 + 8 + x";
+const param = "1";
 const result = solution(param);
 console.log("result : ", result);
