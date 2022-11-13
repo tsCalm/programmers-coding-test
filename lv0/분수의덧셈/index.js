@@ -4,16 +4,29 @@
  * 제한사항
  * 0 <denum1, num1, denum2, num2 < 1,000
  */
-
+function gcd(a, b) {
+  return b ? gcd(b, a % b) : a;
+}
 function solution(denum1, num1, denum2, num2) {
-  var answer = [];
-  return answer;
+  const bigNum = num1 > num2 ? num1 : num2;
+  const smallNum = num1 > num2 ? num2 : num1;
+
+  // 최소공배수
+  let temp1 = (bigNum * smallNum) / gcd(bigNum, smallNum);
+  // 분자에 곱해야하는 값
+  const v1 = temp1 / num1;
+  const v2 = temp1 / num2;
+
+  const de = denum1 * v1 + denum2 * v2;
+  // 최대공약수
+  let temp2 = gcd(de, temp1);
+  return temp2 === 1 ? [de, temp1] : [de / temp2, temp1 / temp2];
 }
 
-const denum1 = 1;
+const denum1 = 9;
 const num1 = 2;
-const denum2 = 3;
-const num2 = 4;
+const denum2 = 1;
+const num2 = 3;
 
 /**
  * 분모의 최소공배수를 구한다
