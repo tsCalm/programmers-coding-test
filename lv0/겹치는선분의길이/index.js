@@ -21,24 +21,41 @@ function solution(lines) {
     }
     return rst;
   };
-  const temp = [];
+  const sliceArr = (arr, store) => {
+    const arr_ = [...arr];
+    let bv = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      const mv = arr[i] - bv;
+      if (mv !== 1) {
+        arr_.splice(i, 1, ",");
+        break;
+      }
+
+      bv = arr[i];
+    }
+    return arr_;
+  };
+  let temp = [];
+
   const numbers = lines.map((arr) => getNums(arr));
-  numbers.forEach((arr, idx, arrs) => {
-    const twoLine = arrs.filter((array) => array !== arr);
-    twoLine.forEach((line) => {
+  while (numbers.length > 1) {
+    const arr = numbers.shift();
+    numbers.forEach((line) => {
       const item = line.filter((num) => arr.includes(num));
       temp.push(item);
     });
-  });
-  console.log(temp);
-  var answer = 0;
-  return answer;
+  }
+  temp = temp.filter((arr) => arr.length > 1);
+  const result = [...new Set(temp.flat(1))].sort((a, b) => a - b);
+  if (result.length < 2) return 0;
+  const test = sliceArr(result, []);
+  return result.length > 1 ? result.at(-1) - result[0] : 0;
 }
 
 const param = [
-  [0, 1],
-  [2, 5],
-  [3, 9],
+  [0, 5],
+  [9, 15],
+  [1, 10],
 ];
 const result = solution(param);
 console.log("result : ", result);
