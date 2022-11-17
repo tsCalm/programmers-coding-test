@@ -10,8 +10,22 @@ babbling의 원소에서 "aya", "ye", "woo", "ma"는 각각 최대 한 번씩만
 문자열은 알파벳 소문자로만 이루어져 있습니다.
  */
 function solution(babbling) {
-  var answer = 0;
-  return answer;
+  const wordCheck = (word) => {
+    const wordArr = word.split("");
+    let babyWord = ["aya", "ye", "woo", "ma"];
+    let confirmWord = "";
+    while (wordArr.length > 0) {
+      const shiftChar = wordArr.shift();
+      confirmWord += shiftChar;
+      if (babyWord.includes(confirmWord)) {
+        babyWord = babyWord.filter((bw) => bw !== confirmWord);
+        confirmWord = "";
+      }
+    }
+    return !confirmWord;
+  };
+  const answer = babbling.map((word) => wordCheck(word));
+  return answer.filter((rst) => rst).length;
 }
 
 const param = ["aya", "yee", "u", "maa", "wyeoo"];
