@@ -21,41 +21,52 @@ function solution(lines) {
     }
     return rst;
   };
-  const sliceArr = (arr, store) => {
-    const arr_ = [...arr];
-    let bv = arr[0];
-    for (let i = 1; i < arr.length; i++) {
-      const mv = arr[i] - bv;
-      if (mv !== 1) {
-        arr_.splice(i, 1, ",");
-        break;
+  const coNum = (numbers, store) => {
+    const fLine = numbers.shift();
+    if (numbers.length === 0) return store.filter((arr) => arr.length > 1);
+    numbers.forEach((arr) => {
+      const wrapArr = arr.filter((n) => fLine.includes(n));
+      store.push(wrapArr);
+    });
+    return coNum(numbers, store);
+  };
+  const sliceRst = (rst, store) => {
+    let bv = rst[0];
+    for (let i = 1; i < rst.length; i++) {
+      const mv = rst[i] - bv;
+      bv = rst[i];
+      if (mv === 1) {
+        if (i === rst.length - 1) {
+          store.push([...rst]);
+          rst = [];
+        }
+        continue;
       }
-
-      bv = arr[i];
+      const temp = rst.splice(0, i);
+      store.push(temp);
+      break;
     }
-    return arr_;
+    if (rst.length !== 0) sliceRst(rst, store);
+    return store;
   };
   let temp = [];
 
   const numbers = lines.map((arr) => getNums(arr));
-  while (numbers.length > 1) {
-    const arr = numbers.shift();
-    numbers.forEach((line) => {
-      const item = line.filter((num) => arr.includes(num));
-      temp.push(item);
-    });
-  }
-  temp = temp.filter((arr) => arr.length > 1);
-  const result = [...new Set(temp.flat(1))].sort((a, b) => a - b);
-  if (result.length < 2) return 0;
-  const test = sliceArr(result, []);
-  return result.length > 1 ? result.at(-1) - result[0] : 0;
+  const ol = coNum(numbers, []);
+  if (ol.length === 0) return 0;
+  const olr = [...new Set(ol.flat(1))].sort((a, b) => a - b);
+  const answer = sliceRst(olr, []);
+  return answer
+    .map((arr) => {
+      return arr.at(-1) - arr[0];
+    })
+    .reduce((prev, cur) => prev + cur, 0);
 }
 
 const param = [
-  [0, 5],
-  [9, 15],
-  [1, 10],
+  [0, 3],
+  [6, 10],
+  [0, 10],
 ];
 const result = solution(param);
-console.log("result : ", result);
+// console.log("result : ", result);
