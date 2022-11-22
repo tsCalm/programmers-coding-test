@@ -42,12 +42,6 @@ function solution(dots) {
       findedTan.count++;
     }
   });
-  // const fhl = getAngle(dots[0], dots[2]);
-  // const shl = getAngle(dots[1], dots[3]);
-  // const fvl = getAngle(dots[0], dots[1]);
-  // const svl = getAngle(dots[2], dots[3]);
-  // if (fhl === shl) answer = 1;
-  // if (fvl === svl) answer = 1;
   return answer.filter((item) => item.count >= 2).length > 0 ? 1 : 0;
 }
 
