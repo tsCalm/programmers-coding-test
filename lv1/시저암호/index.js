@@ -10,30 +10,38 @@
  * s의 길이는 8000이하입니다.
  * n은 1 이상, 25이하인 자연수입니다.
  */
+//  const upArr = [];
+//  const lowArr = [];
+//  for (let i = 65; i <= 90; i++) {
+//    const obj = {
+//      asc: i,
+//      str: String.fromCharCode(i),
+//    };
+//    upArr.push(obj);
+//  }
+//  for (let i = 97; i <= 122; i++) {
+//    const obj = {
+//      asc: i,
+//      str: String.fromCharCode(i),
+//    };
+//    lowArr.push(obj);
+//  }
+const pushChar = (ascNum, pushNum) => {
+  if (ascNum === 32) return 32;
+  if (ascNum >= 65 && ascNum <= 90) {
+    let addNum = ascNum + pushNum;
+    return addNum > 90 ? addNum - 26 : addNum;
+  }
+  let addNum = ascNum + pushNum;
+  return addNum > 122 ? addNum - 26 : addNum;
+};
 function solution(s, n) {
-  const upArr = [];
-  const lowArr = [];
-  for (let i = 65; i <= 90; i++) {
-    const obj = {
-      asc: i,
-      str: String.fromCharCode(i),
-    };
-    upArr.push(obj);
-  }
-  for (let i = 97; i <= 122; i++) {
-    const obj = {
-      asc: i,
-      str: String.fromCharCode(i),
-    };
-    lowArr.push(obj);
-  }
-  console.log(upArr);
-  console.log(lowArr);
-  var answer = "";
-  return answer;
+  const sArr = s.split("");
+  const answer = sArr.map((char) => pushChar(char.charCodeAt(0), n));
+  return answer.map((num) => String.fromCharCode(num)).join("");
 }
-const param = 13;
-const param2 = 17;
+const param = "a B z";
+const param2 = 4;
 const result = solution(param, param2);
 
 console.log("result : ", result);
